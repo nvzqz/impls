@@ -1,7 +1,7 @@
 [package]
 name = "does_impl"
 version = "0.0.0"
-authors = ["Nikolai Vazquez"]
+authors = ["Nikolai Vazquez", "Nadrieril Feneanar"]
 license = "MIT OR Apache-2.0"
 description = "[WIP] Determine if a type does implement a logical trait expression."
 repository = "https://github.com/nvzqz/does_impl"
