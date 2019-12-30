@@ -9,6 +9,9 @@
         <img src="https://img.shields.io/crates/v/does_impl.svg" alt="Crates.io">
         <img src="https://img.shields.io/crates/d/does_impl.svg" alt="Downloads">
     </a>
+    <a href="https://docs.rs/does_impl">
+        <img src="https://docs.rs/does_impl/badge.svg" alt="docs.rs">
+    </a>
     <a href="https://travis-ci.com/nvzqz/does_impl">
         <img src="https://travis-ci.com/nvzqz/does_impl.svg?branch=master" alt="Build Status">
     </a>
