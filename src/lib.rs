@@ -49,6 +49,10 @@ macro_rules! _does_impl {
         <Wrapper<$type>>::DOES_IMPL.value()
     }};
 
+    // PAREN
+    ($type:ty: ($($trait_expr:tt)+)) => {
+        _does_impl!($type: $($trait_expr)+)
+    };
     // PAREN+OR
     ($type:ty: ($($t1:tt)+) | $($t2:tt)+) => {
         _does_impl!($type: $($t1)+)
