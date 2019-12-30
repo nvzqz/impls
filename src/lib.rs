@@ -8,8 +8,8 @@
 //!         <img src="https://img.shields.io/crates/v/impls.svg" alt="Crates.io">
 //!         <img src="https://img.shields.io/crates/d/impls.svg" alt="Downloads">
 //!     </a>
-//!     <a href="https://travis-ci.com/nvzqz/impls">
-//!         <img src="https://travis-ci.com/nvzqz/impls.svg?branch=master" alt="Build Status">
+//!     <a href="https://github.com/nvzqz/impls/actions?query=workflow%3ACI">
+//!         <img src="https://github.com/nvzqz/impls/workflows/CI/badge.svg" alt="Build Status">
 //!     </a>
 //!     <img src="https://img.shields.io/badge/rustc-^1.37.0-blue.svg" alt="rustc ^1.37.0">
 //!     <br>
