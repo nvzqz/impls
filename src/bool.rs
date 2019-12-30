@@ -1,7 +1,4 @@
-#[derive(Clone, Copy)]
 pub struct True;
-
-#[derive(Clone, Copy)]
 pub struct False;
 
 impl True {
