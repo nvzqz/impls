@@ -1,7 +1,8 @@
 <div align="center">
     <a href="https://github.com/nvzqz/does_impl">
         <img src="https://raw.githubusercontent.com/nvzqz/does_impl/assets/banner.svg?sanitize=true"
-             height="250px">
+             height="250px"
+             alt="does_impl banner">
     </a>
     <br>
     <a href="https://crates.io/crates/does_impl">
