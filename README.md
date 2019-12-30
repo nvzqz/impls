@@ -157,7 +157,7 @@ const IMPLS: bool = impls!(u8: From<u32>);
 Using [`static_assertions`], we can fail to compile if the trait expression
 evaluates to `false`:
 
-```compile_fail
+```rust
 const_assert!(impls!(*const u8: Send | Sync));
 ```
 
