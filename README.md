@@ -283,7 +283,7 @@ at your choosing.
 [`Sized`]:  https://doc.rust-lang.org/std/marker/trait.Sized.html
 
 [`Cargo.toml`]: https://doc.rust-lang.org/cargo/reference/manifest.html
-[`does_impl!`]: macro.does_impl.html
+[`does_impl!`]: https://doc.rust-lang.org/does_impl/0.0.0/macro.does_impl.html
 [2018]: https://blog.rust-lang.org/2018/12/06/Rust-1.31-and-rust-2018.html#rust-2018
 [crate]: https://crates.io/crates/does_impl
 
