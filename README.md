@@ -28,7 +28,7 @@
 
 <!-- IMPORTANT: This documentation is copied from `lib.rs` -->
 
-Determine if a type does implement a logical trait
+Determine if a type implements a logical trait
 expression<sup>[**?**](#logical-trait-expression)</sup>.
 
 This library defines the [`impls!`], a macro<sup>[**?**](#macro)</sup>

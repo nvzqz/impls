@@ -22,7 +22,7 @@
 //! </div>
 //! <br>
 //!
-//! Determine if a type does implement a logical trait
+//! Determine if a type implements a logical trait
 //! expression<sup>[**?**](#logical-trait-expression)</sup>.
 //!
 //! This library defines the [`impls!`], a macro<sup>[**?**](#macro)</sup>
@@ -331,7 +331,7 @@ pub extern crate core as _core;
 #[path = "bool.rs"]
 pub mod _bool;
 
-/// Returns `true` if a type does implement a logical trait expression.
+/// Returns `true` if a type implements a logical trait expression.
 ///
 // IMPORTANT: Update crate level docs when updating these examples!
 /// # Examples
@@ -506,8 +506,8 @@ macro_rules! _impls {
         }
         impl<T: ?Sized> DoesNotImpl for T {}
 
-        /// Concrete type with `True` for `IMPLS` if the type does implement
-        /// the given trait. Otherwise, it falls back to `DoesNotImpl`.
+        /// Concrete type with `True` for `IMPLS` if the type implements the
+        /// given trait. Otherwise, it falls back to `DoesNotImpl`.
         struct Wrapper<T: ?Sized>($crate::_core::marker::PhantomData<T>);
 
         #[allow(dead_code)]
