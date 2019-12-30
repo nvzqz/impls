@@ -51,6 +51,7 @@
 //!   - [Unsized Types](#unsized-types)
 //!   - [Generic Types](#generic-types)
 //!   - [Lifetimes](#lifetimes)
+//! - [Authors](#authors)
 //! - [License](#license)
 //!
 //! # Usage
@@ -280,6 +281,21 @@
 //! assert!(impls!(&'static mut [u8]: Ref<'static>));
 //! assert!(impls!(String:           !Ref<'static>));
 //! ```
+//!
+//! ## Authors
+//!
+//! - Nikolai Vazquez
+//!   (GitHub: [@nvzqz](https://github.com/nvzqz), Twitter: [@NikolaiVazquez](https://twitter.com/NikolaiVazquez))
+//!
+//!   Implemented the `impls!` macro with support for all logical operators and
+//!   without the limitations of the initial `does_impl!` macro by Nadrieril.
+//!
+//! - Nadrieril Feneanar
+//!   (GitHub: [@Nadrieril](https://github.com/Nadrieril))
+//!
+//!   Implemented the initial `does_impl!` macro in
+//!   [nvzqz/static-assertions-rs#28](https://github.com/nvzqz/static-assertions-rs/pull/28)
+//!   upon which this crate was originally based.
 //!
 //! # License
 //!
