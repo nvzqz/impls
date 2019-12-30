@@ -336,6 +336,9 @@
     html_logo_url = "https://raw.githubusercontent.com/nvzqz/impls/assets/logo.svg?sanitize=true"
 )]
 
+// Allocating types like `String` are used when testing.
+#![cfg_attr(not(test), no_std)]
+
 #[doc(hidden)]
 pub extern crate core as _core;
 
