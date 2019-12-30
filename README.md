@@ -20,6 +20,7 @@
         <img src="https://buymecoffee.intm.org/img/button-paypal-white.png" alt="Buy me a coffee" height="35">
     </a>
 </div>
+<br>
 
 <!-- IMPORTANT: This documentation is copied from `lib.rs` -->
 
