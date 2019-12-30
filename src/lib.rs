@@ -291,6 +291,7 @@
 //! [logical disjunction]:   https://en.wikipedia.org/wiki/Logical_disjunction
 
 #![deny(missing_docs)]
+#![doc(html_logo_url = "https://raw.githubusercontent.com/nvzqz/does_impl/assets/logo.svg?sanitize=true")]
 
 #[doc(hidden)]
 pub extern crate core as _core;
