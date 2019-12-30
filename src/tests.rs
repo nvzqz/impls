@@ -55,7 +55,7 @@ fn impls() {
                     "[{file}:{line}] {ty}: {expr}\n",
                     file = file!(),
                     line = line!(),
-                    ty = std::any::type_name::<$t>(),
+                    ty = stringify!($t),
                     expr = stringify!($($trait_expr)+)
                 ));
             }
