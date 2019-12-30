@@ -18,9 +18,9 @@ fn precedence() {
         ($($a:ident, $b:ident, $c:ident, $d:ident;)+) => { $({
             const DOES_IMPL: bool = _bool::$a.value() | _bool::$b.value() ^ _bool::$c.value() & _bool::$d.value();
 
-            assert_eq!(does_impl!(Test: $a | $b ^ $c & $d), DOES_IMPL);
-            assert_eq!(does_impl!(Test: $a | ($b ^ ($c & $d))), DOES_IMPL);
-            assert_ne!(does_impl!(Test: (($a | $b) ^ $c) & $d), DOES_IMPL);
+            assert_eq!(does_impl!(Test:   $a |  $b  ^  $c  & $d),   DOES_IMPL);
+            assert_eq!(does_impl!(Test:   $a | ($b  ^ ($c  & $d))), DOES_IMPL);
+            assert_ne!(does_impl!(Test: (($a |  $b) ^  $c) & $d),   DOES_IMPL);
         })+ };
     }
 
