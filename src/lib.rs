@@ -27,7 +27,7 @@ macro_rules! does_impl {
 macro_rules! _does_impl {
     // ONE: Turn `$trait` into `true` or `false` based on whether `$type`
     // implements it.
-    ($type:ty: $trait:path) => {{
+    ($type:ty: $(! !)* $trait:path) => {{
         // Do not import types in order to prevent trait name collisions.
 
         /// Fallback trait with `False` for `DOES_IMPL` if the type does not
@@ -50,72 +50,72 @@ macro_rules! _does_impl {
     }};
 
     // NOT
-    ($type:ty: !$trait:path) => {
+    ($type:ty: $(! !)* !$trait:path) => {
         !_does_impl!($type: $trait)
     };
 
     // PAREN
-    ($type:ty: ($($trait_expr:tt)+)) => {
+    ($type:ty: $(! !)* ($($trait_expr:tt)+)) => {
         _does_impl!($type: $($trait_expr)+)
     };
     // PAREN+OR
-    ($type:ty: ($($t1:tt)+) | $($t2:tt)+) => {
+    ($type:ty: $(! !)* ($($t1:tt)+) | $($t2:tt)+) => {
         _does_impl!($type: $($t1)+)
         |
         _does_impl!($type: $($t2)+)
     };
     // PAREN+OR+NOT
-    ($type:ty: !($($t1:tt)+) | $($t2:tt)+) => {
+    ($type:ty: $(! !)* !($($t1:tt)+) | $($t2:tt)+) => {
         !_does_impl!($type: $($t1)+)
         |
         _does_impl!($type: $($t2)+)
     };
     // PAREN+AND
-    ($type:ty: ($($t1:tt)+) & $($t2:tt)+) => {
+    ($type:ty: $(! !)* ($($t1:tt)+) & $($t2:tt)+) => {
         _does_impl!($type: $($t1)+)
         &
         _does_impl!($type: $($t2)+)
     };
     // PAREN+AND+NOT
-    ($type:ty: !($($t1:tt)+) & $($t2:tt)+) => {
+    ($type:ty: $(! !)* !($($t1:tt)+) & $($t2:tt)+) => {
         !_does_impl!($type: $($t1)+)
         &
         _does_impl!($type: $($t2)+)
     };
     // PAREN+XOR
-    ($type:ty: ($($t1:tt)+) ^ $($t2:tt)+) => {
+    ($type:ty: $(! !)* ($($t1:tt)+) ^ $($t2:tt)+) => {
         _does_impl!($type: $($t1)+)
         ^
         _does_impl!($type: $($t2)+)
     };
     // PAREN+XOR+NOT
-    ($type:ty: !($($t1:tt)+) ^ $($t2:tt)+) => {
+    ($type:ty: $(! !)* !($($t1:tt)+) ^ $($t2:tt)+) => {
         !_does_impl!($type: $($t1)+)
         ^
         _does_impl!($type: $($t2)+)
     };
 
     // OR: Any.
-    ($type:ty: $t1:path | $($t2:tt)+) => {{
+    ($type:ty: $(! !)* $t1:path | $($t2:tt)+) => {{
         _does_impl!($type: $t1)
         |
         _does_impl!($type: $($t2)+)
     }};
     // OR+NOT: Any.
-    ($type:ty: !$t1:path | $($t2:tt)+) => {{
+    ($type:ty: $(! !)* !$t1:path | $($t2:tt)+) => {{
         !_does_impl!($type: $t1)
         |
         _does_impl!($type: $($t2)+)
     }};
 
     // AND: 0 lifetimes, 0 generics.
-    ($type:ty: $t1:ident & $($t2:tt)+) => {{
+    ($type:ty: $(! !)* $t1:ident & $($t2:tt)+) => {{
         _does_impl!($type: $t1)
         &
         _does_impl!($type: $($t2)+)
     }};
     // AND+NOT: 0 lifetimes, 0 generics.
-    ($type:ty: !$t1:ident & $($t2:tt)+) => {{
+    ($type:ty: $(! !)* !$t1:ident & $($t2:tt)+) => {{
         !_does_impl!($type: $t1)
         &
         _does_impl!($type: $($t2)+)
@@ -123,7 +123,7 @@ macro_rules! _does_impl {
 
     // AND: 1+ lifetimes, 0+ generics.
     (
-        $type:ty:
+        $type:ty: $(! !)*
         $t1:ident < $($t1_lifetime:lifetime),+ $(, $t1_generic:ty)* $(,)? >
         &
         $($t2:tt)+
@@ -134,7 +134,7 @@ macro_rules! _does_impl {
     }};
     // AND+NOT: 1+ lifetimes, 0+ generics.
     (
-        $type:ty:
+        $type:ty: $(! !)*
         !$t1:ident < $($t1_lifetime:lifetime),+ $(, $t1_generic:ty)* $(,)? >
         &
         $($t2:tt)+
@@ -146,7 +146,7 @@ macro_rules! _does_impl {
 
     // AND: 0 lifetimes, 1+ generics.
     (
-        $type:ty:
+        $type:ty: $(! !)*
         $t1:ident < $($t1_generic:ty),+ $(,)? >
         &
         $($t2:tt)+
@@ -157,7 +157,7 @@ macro_rules! _does_impl {
     }};
     // AND+NOT: 0 lifetimes, 1+ generics.
     (
-        $type:ty:
+        $type:ty: $(! !)*
         !$t1:ident < $($t1_generic:ty),+ $(,)? >
         &
         $($t2:tt)+
@@ -168,13 +168,13 @@ macro_rules! _does_impl {
     }};
 
     // XOR: 0 lifetimes, 0 generics.
-    ($type:ty: $t1:ident ^ $($t2:tt)+) => {{
+    ($type:ty: $(! !)* $t1:ident ^ $($t2:tt)+) => {{
         _does_impl!($type: $t1)
         ^
         _does_impl!($type: $($t2)+)
     }};
     // XOR+NOT: 0 lifetimes, 0 generics.
-    ($type:ty: !$t1:ident ^ $($t2:tt)+) => {{
+    ($type:ty: $(! !)* !$t1:ident ^ $($t2:tt)+) => {{
         ! _does_impl!($type: $t1)
         ^
         _does_impl!($type: $($t2)+)
@@ -182,7 +182,7 @@ macro_rules! _does_impl {
 
     // XOR: 1+ lifetimes, 0+ generics.
     (
-        $type:ty:
+        $type:ty: $(! !)*
         $t1:ident < $($t1_lifetime:lifetime),+ $(, $t1_generic:ty)* $(,)? >
         ^
         $($t2:tt)+
@@ -193,7 +193,7 @@ macro_rules! _does_impl {
     }};
     // XOR+NOT: 1+ lifetimes, 0+ generics.
     (
-        $type:ty:
+        $type:ty: $(! !)*
         ! $t1:ident < $($t1_lifetime:lifetime),+ $(, $t1_generic:ty)* $(,)? >
         ^
         $($t2:tt)+
@@ -205,7 +205,7 @@ macro_rules! _does_impl {
 
     // XOR: 0 lifetimes, 1+ generics.
     (
-        $type:ty:
+        $type:ty: $(! !)*
         $t1:ident < $($t1_generic:ty),+ $(,)? >
         ^
         $($t2:tt)+
@@ -216,7 +216,7 @@ macro_rules! _does_impl {
     }};
     // XOR+NOT: 0 lifetimes, 1+ generics.
     (
-        $type:ty:
+        $type:ty: $(! !)*
         ! $t1:ident < $($t1_generic:ty),+ $(,)? >
         ^
         $($t2:tt)+
