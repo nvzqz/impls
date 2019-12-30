@@ -67,10 +67,8 @@ does_impl = "1"
 and this to your crate root (`main.rs` or `lib.rs`):
 
 ```rust
-## #[allow(unused_imports)]
-##[macro_use]
+#[macro_use]
 extern crate does_impl;
-## fn main() {}
 ```
 
 When using [Rust 2018 edition][2018], the following import can help if
