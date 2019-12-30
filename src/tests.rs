@@ -10,7 +10,7 @@ trait True {}
 impl<T: ?Sized> True for T {}
 trait False {}
 
-// Tests that `does_impl!` follows Rust's rules of precedence.
+// Tests that `impls!` follows Rust's rules of precedence.
 //
 // Rust's rules of precedence are defined at:
 // https://doc.rust-lang.org/reference/expressions.html#expression-precedence
@@ -20,11 +20,11 @@ fn precedence() {
 
     macro_rules! table {
         ($($a:ident, $b:ident, $c:ident, $d:ident;)+) => { $({
-            const DOES_IMPL: bool = _bool::$a.value() | _bool::$b.value() ^ _bool::$c.value() & _bool::$d.value();
+            const IMPLS: bool = _bool::$a.value() | _bool::$b.value() ^ _bool::$c.value() & _bool::$d.value();
 
-            assert_eq!(does_impl!(Test:   $a |  $b  ^  $c  & $d),   DOES_IMPL);
-            assert_eq!(does_impl!(Test:   $a | ($b  ^ ($c  & $d))), DOES_IMPL);
-            assert_ne!(does_impl!(Test: (($a |  $b) ^  $c) & $d),   DOES_IMPL);
+            assert_eq!(impls!(Test:   $a |  $b  ^  $c  & $d),   IMPLS);
+            assert_eq!(impls!(Test:   $a | ($b  ^ ($c  & $d))), IMPLS);
+            assert_ne!(impls!(Test: (($a |  $b) ^  $c) & $d),   IMPLS);
         })+ };
     }
 
@@ -50,7 +50,7 @@ fn impls() {
 
     macro_rules! assert_impl {
         ($t:ty: $($trait_expr:tt)+) => {
-            if !does_impl!($t: $($trait_expr)+) {
+            if !impls!($t: $($trait_expr)+) {
                 errors.push_str(&format!(
                     "[{file}:{line}] {ty}: {expr}\n",
                     file = file!(),

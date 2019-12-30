@@ -1,19 +1,19 @@
 <div align="center">
-    <a href="https://github.com/nvzqz/does_impl">
-        <img src="https://raw.githubusercontent.com/nvzqz/does_impl/assets/banner.svg?sanitize=true"
+    <a href="https://github.com/nvzqz/impls">
+        <img src="https://raw.githubusercontent.com/nvzqz/impls/assets/banner.svg?sanitize=true"
              height="250px"
-             alt="does_impl banner">
+             alt="impls banner">
     </a>
     <br>
-    <a href="https://crates.io/crates/does_impl">
-        <img src="https://img.shields.io/crates/v/does_impl.svg" alt="Crates.io">
-        <img src="https://img.shields.io/crates/d/does_impl.svg" alt="Downloads">
+    <a href="https://crates.io/crates/impls">
+        <img src="https://img.shields.io/crates/v/impls.svg" alt="Crates.io">
+        <img src="https://img.shields.io/crates/d/impls.svg" alt="Downloads">
     </a>
-    <a href="https://docs.rs/does_impl">
-        <img src="https://docs.rs/does_impl/badge.svg" alt="docs.rs">
+    <a href="https://docs.rs/impls">
+        <img src="https://docs.rs/impls/badge.svg" alt="docs.rs">
     </a>
-    <a href="https://travis-ci.com/nvzqz/does_impl">
-        <img src="https://travis-ci.com/nvzqz/does_impl.svg?branch=master" alt="Build Status">
+    <a href="https://travis-ci.com/nvzqz/impls">
+        <img src="https://travis-ci.com/nvzqz/impls.svg?branch=master" alt="Build Status">
     </a>
     <img src="https://img.shields.io/badge/rustc-^1.37.0-blue.svg" alt="rustc ^1.37.0">
     <br>
@@ -31,12 +31,12 @@
 Determine if a type does implement a logical trait
 expression<sup>[**?**](#logical-trait-expression)</sup>.
 
-This library defines the [`does_impl!`], a macro<sup>[**?**](#macro)</sup>
+This library defines the [`impls!`], a macro<sup>[**?**](#macro)</sup>
 that returns a [`bool`] indicating whether a type implements a boolean-like
 expression over a set of traits<sup>[**?**](#trait)</sup>.
 
 ```rust
-assert!(does_impl!(String: Clone & !Copy & Send & Sync));
+assert!(impls!(String: Clone & !Copy & Send & Sync));
 ```
 
 See [examples](#examples) for detailed use cases.
@@ -65,21 +65,21 @@ following to your project's [`Cargo.toml`]:
 
 ```toml
 [dependencies]
-does_impl = "1"
+impls = "1"
 ```
 
 and this to your crate root (`main.rs` or `lib.rs`):
 
 ```rust
 #[macro_use]
-extern crate does_impl;
+extern crate impls;
 ```
 
 When using [Rust 2018 edition][2018], the following import can help if
 having `#[macro_use]` is undesirable.
 
 ```rust
-use does_impl::does_impl;
+use impls::impls;
 ```
 
 ## Vocabulary
@@ -150,14 +150,14 @@ Because types are [compile-time] constructs, the result of this macro can be
 used as a `const` value:
 
 ```rust
-const DOES_IMPL: bool = does_impl!(u8: From<u32>);
+const IMPLS: bool = impls!(u8: From<u32>);
 ```
 
 Using [`static_assertions`], we can fail to compile if the trait expression
 evaluates to `false`:
 
 ```compile_fail
-const_assert!(does_impl!(*const u8: Send | Sync));
+const_assert!(impls!(*const u8: Send | Sync));
 ```
 
 ### Precedence and Nesting
@@ -167,8 +167,8 @@ define a custom order of operations (e.g. left-to-right), simply nest the
 expressions with parentheses.
 
 ```rust
-let pre = does_impl!(u64:   From<u8> | From<u16>  ^ From<u32>  & From<u64>);
-let ltr = does_impl!(u64: ((From<u8> | From<u16>) ^ From<u32>) & From<u64>);
+let pre = impls!(u64:   From<u8> | From<u16>  ^ From<u32>  & From<u64>);
+let ltr = impls!(u64: ((From<u8> | From<u16>) ^ From<u32>) & From<u64>);
 
 assert_eq!(pre, true | true ^ true & true);
 assert_ne!(pre, ltr);
@@ -187,7 +187,7 @@ trait Bar {}
 
 impl Foo for T {}
 
-assert!(does_impl!(T: Foo ^ Bar));
+assert!(impls!(T: Foo ^ Bar));
 ```
 
 ### Reference Types
@@ -196,7 +196,7 @@ Something that's surprising to many Rust users is that [`&mut T`] _does not_
 implement [`Copy`] _nor_ [`Clone`]:
 
 ```rust
-assert!(does_impl!(&mut u32: !Copy & !Clone));
+assert!(impls!(&mut u32: !Copy & !Clone));
 ```
 
 Surely you're thinking now that this macro must be broken, because you've
@@ -211,16 +211,16 @@ There's a variety of types in Rust that don't implement [`Sized`]:
 
 ```rust
 // Slices store their size with their pointer.
-assert!(does_impl!(str:  !Sized));
-assert!(does_impl!([u8]: !Sized));
+assert!(impls!(str:  !Sized));
+assert!(impls!([u8]: !Sized));
 
 // Trait objects store their size in a vtable.
 trait Foo {}
-assert!(does_impl!(dyn Foo: !Sized));
+assert!(impls!(dyn Foo: !Sized));
 
 // Wrappers around unsized types are also unsized themselves.
 struct Bar([u8]);
-assert!(does_impl!(Bar: !Sized));
+assert!(impls!(Bar: !Sized));
 ```
 
 ### Generic Types
@@ -237,7 +237,7 @@ struct Value<T> {
 
 impl<T: Send> Value<T> {
     fn do_stuff() {
-        assert!(does_impl!(Cell<T>: Send));
+        assert!(impls!(Cell<T>: Send));
         // ...
     }
 }
@@ -247,10 +247,10 @@ Keep in mind that this can result in false negatives:
 
 ```rust
 const fn is_copy<T>() -> bool {
-    does_impl!(T: Copy)
+    impls!(T: Copy)
 }
 
-assert_ne!(is_copy::<u32>(), does_impl!(u32: Copy));
+assert_ne!(is_copy::<u32>(), impls!(u32: Copy));
 ```
 
 [precedence]: https://doc.rust-lang.org/reference/expressions.html#expression-precedence
@@ -265,17 +265,17 @@ trait Ref<'a> {}
 impl<'a, T: ?Sized> Ref<'a> for &'a T {}
 impl<'a, T: ?Sized> Ref<'a> for &'a mut T {}
 
-assert!(does_impl!(&'static str:      Ref<'static>));
-assert!(does_impl!(&'static mut [u8]: Ref<'static>));
-assert!(does_impl!(String:           !Ref<'static>));
+assert!(impls!(&'static str:      Ref<'static>));
+assert!(impls!(&'static mut [u8]: Ref<'static>));
+assert!(impls!(String:           !Ref<'static>));
 ```
 
 ## License
 
 This project is released under either:
 
-- [MIT License](https://github.com/nvzqz/does_impl/blob/master/LICENSE-MIT)
-- [Apache License (Version 2.0)](https://github.com/nvzqz/does_impl/blob/master/LICENSE-APACHE)
+- [MIT License](https://github.com/nvzqz/impls/blob/master/LICENSE-MIT)
+- [Apache License (Version 2.0)](https://github.com/nvzqz/impls/blob/master/LICENSE-APACHE)
 
 at your choosing.
 
@@ -287,9 +287,9 @@ at your choosing.
 [`Sized`]:  https://doc.rust-lang.org/std/marker/trait.Sized.html
 
 [`Cargo.toml`]: https://doc.rust-lang.org/cargo/reference/manifest.html
-[`does_impl!`]: https://doc.rust-lang.org/does_impl/0.0.0/macro.does_impl.html
+[`impls!`]: https://doc.rust-lang.org/impls/0.0.0/macro.impls.html
 [2018]: https://blog.rust-lang.org/2018/12/06/Rust-1.31-and-rust-2018.html#rust-2018
-[crate]: https://crates.io/crates/does_impl
+[crate]: https://crates.io/crates/impls
 
 [`BitAnd`]: https://doc.rust-lang.org/std/ops/trait.BitAnd.html
 [`BitOr`]:  https://doc.rust-lang.org/std/ops/trait.BitOr.html

@@ -1,15 +1,15 @@
 //! <div align="center">
-//!     <a href="https://github.com/nvzqz/does_impl">
-//!         <img src="https://raw.githubusercontent.com/nvzqz/does_impl/assets/banner.svg?sanitize=true"
+//!     <a href="https://github.com/nvzqz/impls">
+//!         <img src="https://raw.githubusercontent.com/nvzqz/impls/assets/banner.svg?sanitize=true"
 //!              height="250px">
 //!     </a>
 //!     <br>
-//!     <a href="https://crates.io/crates/does_impl">
-//!         <img src="https://img.shields.io/crates/v/does_impl.svg" alt="Crates.io">
-//!         <img src="https://img.shields.io/crates/d/does_impl.svg" alt="Downloads">
+//!     <a href="https://crates.io/crates/impls">
+//!         <img src="https://img.shields.io/crates/v/impls.svg" alt="Crates.io">
+//!         <img src="https://img.shields.io/crates/d/impls.svg" alt="Downloads">
 //!     </a>
-//!     <a href="https://travis-ci.com/nvzqz/does_impl">
-//!         <img src="https://travis-ci.com/nvzqz/does_impl.svg?branch=master" alt="Build Status">
+//!     <a href="https://travis-ci.com/nvzqz/impls">
+//!         <img src="https://travis-ci.com/nvzqz/impls.svg?branch=master" alt="Build Status">
 //!     </a>
 //!     <img src="https://img.shields.io/badge/rustc-^1.37.0-blue.svg" alt="rustc ^1.37.0">
 //!     <br>
@@ -25,13 +25,13 @@
 //! Determine if a type does implement a logical trait
 //! expression<sup>[**?**](#logical-trait-expression)</sup>.
 //!
-//! This library defines the [`does_impl!`], a macro<sup>[**?**](#macro)</sup>
+//! This library defines the [`impls!`], a macro<sup>[**?**](#macro)</sup>
 //! that returns a [`bool`] indicating whether a type implements a boolean-like
 //! expression over a set of traits<sup>[**?**](#trait)</sup>.
 //!
 //! ```
-//! # #[macro_use] extern crate does_impl;
-//! assert!(does_impl!(String: Clone & !Copy & Send & Sync));
+//! # #[macro_use] extern crate impls;
+//! assert!(impls!(String: Clone & !Copy & Send & Sync));
 //! ```
 //!
 //! See [examples](#examples) for detailed use cases.
@@ -60,7 +60,7 @@
 //!
 //! ```toml
 //! [dependencies]
-//! does_impl = "1"
+//! impls = "1"
 //! ```
 //!
 //! and this to your crate root (`main.rs` or `lib.rs`):
@@ -68,7 +68,7 @@
 //! ```
 //! # #[allow(unused_imports)]
 //! #[macro_use]
-//! extern crate does_impl;
+//! extern crate impls;
 //! # fn main() {}
 //! ```
 //!
@@ -76,7 +76,7 @@
 //! having `#[macro_use]` is undesirable.
 //!
 //! ```edition2018
-//! use does_impl::does_impl;
+//! use impls::impls;
 //! ```
 //!
 //! # Vocabulary
@@ -137,7 +137,7 @@
 //! See ["Precedence and Nesting"](#precedence-and-nesting) for information
 //! about the order in which these operations are performed.
 //!
-// IMPORTANT: These examples are copy and pasted directly from `does_impl!`
+// IMPORTANT: These examples are copy and pasted directly from `impls!`
 //! # Examples
 //!
 //! This macro works in every type context. See below for use cases.
@@ -148,19 +148,19 @@
 //! used as a `const` value:
 //!
 //! ```
-//! # #[macro_use] extern crate does_impl;
-//! const DOES_IMPL: bool = does_impl!(u8: From<u32>);
+//! # #[macro_use] extern crate impls;
+//! const IMPLS: bool = impls!(u8: From<u32>);
 //! ```
 //!
 //! Using [`static_assertions`], we can fail to compile if the trait expression
 //! evaluates to `false`:
 //!
 //! ```compile_fail
-//! # #[macro_use] extern crate does_impl;
+//! # #[macro_use] extern crate impls;
 //! # macro_rules! const_assert {
 //! #     ($x:expr) => { let _: [(); 1] = [(); $x as usize]; }
 //! # }
-//! const_assert!(does_impl!(*const u8: Send | Sync));
+//! const_assert!(impls!(*const u8: Send | Sync));
 //! ```
 //!
 //! ## Precedence and Nesting
@@ -170,9 +170,9 @@
 //! expressions with parentheses.
 //!
 //! ```
-//! # #[macro_use] extern crate does_impl;
-//! let pre = does_impl!(u64:   From<u8> | From<u16>  ^ From<u32>  & From<u64>);
-//! let ltr = does_impl!(u64: ((From<u8> | From<u16>) ^ From<u32>) & From<u64>);
+//! # #[macro_use] extern crate impls;
+//! let pre = impls!(u64:   From<u8> | From<u16>  ^ From<u32>  & From<u64>);
+//! let ltr = impls!(u64: ((From<u8> | From<u16>) ^ From<u32>) & From<u64>);
 //!
 //! assert_eq!(pre, true | true ^ true & true);
 //! assert_ne!(pre, ltr);
@@ -184,7 +184,7 @@
 //! implements one of two traits, but not both:
 //!
 //! ```
-//! # #[macro_use] extern crate does_impl;
+//! # #[macro_use] extern crate impls;
 //! struct T;
 //!
 //! trait Foo {}
@@ -192,7 +192,7 @@
 //!
 //! impl Foo for T {}
 //!
-//! assert!(does_impl!(T: Foo ^ Bar));
+//! assert!(impls!(T: Foo ^ Bar));
 //! ```
 //!
 //! ## Reference Types
@@ -201,8 +201,8 @@
 //! implement [`Copy`] _nor_ [`Clone`]:
 //!
 //! ```
-//! # #[macro_use] extern crate does_impl;
-//! assert!(does_impl!(&mut u32: !Copy & !Clone));
+//! # #[macro_use] extern crate impls;
+//! assert!(impls!(&mut u32: !Copy & !Clone));
 //! ```
 //!
 //! Surely you're thinking now that this macro must be broken, because you've
@@ -216,18 +216,18 @@
 //! There's a variety of types in Rust that don't implement [`Sized`]:
 //!
 //! ```
-//! # #[macro_use] extern crate does_impl;
+//! # #[macro_use] extern crate impls;
 //! // Slices store their size with their pointer.
-//! assert!(does_impl!(str:  !Sized));
-//! assert!(does_impl!([u8]: !Sized));
+//! assert!(impls!(str:  !Sized));
+//! assert!(impls!([u8]: !Sized));
 //!
 //! // Trait objects store their size in a vtable.
 //! trait Foo {}
-//! assert!(does_impl!(dyn Foo: !Sized));
+//! assert!(impls!(dyn Foo: !Sized));
 //!
 //! // Wrappers around unsized types are also unsized themselves.
 //! struct Bar([u8]);
-//! assert!(does_impl!(Bar: !Sized));
+//! assert!(impls!(Bar: !Sized));
 //! ```
 //!
 //! ## Generic Types
@@ -236,7 +236,7 @@
 //! constraints of the generic type:
 //!
 //! ```
-//! # #[macro_use] extern crate does_impl;
+//! # #[macro_use] extern crate impls;
 //! use std::cell::Cell;
 //!
 //! struct Value<T> {
@@ -246,7 +246,7 @@
 //!
 //! impl<T: Send> Value<T> {
 //!     fn do_stuff() {
-//!         assert!(does_impl!(Cell<T>: Send));
+//!         assert!(impls!(Cell<T>: Send));
 //!         // ...
 //!     }
 //! }
@@ -255,12 +255,12 @@
 //! Keep in mind that this can result in false negatives:
 //!
 //! ```
-//! # #[macro_use] extern crate does_impl;
+//! # #[macro_use] extern crate impls;
 //! const fn is_copy<T>() -> bool {
-//!     does_impl!(T: Copy)
+//!     impls!(T: Copy)
 //! }
 //!
-//! assert_ne!(is_copy::<u32>(), does_impl!(u32: Copy));
+//! assert_ne!(is_copy::<u32>(), impls!(u32: Copy));
 //! ```
 //!
 //! [precedence]: https://doc.rust-lang.org/reference/expressions.html#expression-precedence
@@ -271,22 +271,22 @@
 //! Traits with lifetimes are also supported:
 //!
 //! ```
-//! # #[macro_use] extern crate does_impl;
+//! # #[macro_use] extern crate impls;
 //! trait Ref<'a> {}
 //! impl<'a, T: ?Sized> Ref<'a> for &'a T {}
 //! impl<'a, T: ?Sized> Ref<'a> for &'a mut T {}
 //!
-//! assert!(does_impl!(&'static str:      Ref<'static>));
-//! assert!(does_impl!(&'static mut [u8]: Ref<'static>));
-//! assert!(does_impl!(String:           !Ref<'static>));
+//! assert!(impls!(&'static str:      Ref<'static>));
+//! assert!(impls!(&'static mut [u8]: Ref<'static>));
+//! assert!(impls!(String:           !Ref<'static>));
 //! ```
 //!
 //! # License
 //!
 //! This project is released under either:
 //!
-//! - [MIT License](https://github.com/nvzqz/does_impl/blob/master/LICENSE-MIT)
-//! - [Apache License (Version 2.0)](https://github.com/nvzqz/does_impl/blob/master/LICENSE-APACHE)
+//! - [MIT License](https://github.com/nvzqz/impls/blob/master/LICENSE-MIT)
+//! - [Apache License (Version 2.0)](https://github.com/nvzqz/impls/blob/master/LICENSE-APACHE)
 //!
 //! at your choosing.
 //!
@@ -298,9 +298,9 @@
 //! [`Sized`]:  https://doc.rust-lang.org/std/marker/trait.Sized.html
 //!
 //! [`Cargo.toml`]: https://doc.rust-lang.org/cargo/reference/manifest.html
-//! [`does_impl!`]: macro.does_impl.html
+//! [`impls!`]: macro.impls.html
 //! [2018]: https://blog.rust-lang.org/2018/12/06/Rust-1.31-and-rust-2018.html#rust-2018
-//! [crate]: https://crates.io/crates/does_impl
+//! [crate]: https://crates.io/crates/impls
 //!
 //! [`BitAnd`]: https://doc.rust-lang.org/std/ops/trait.BitAnd.html
 //! [`BitOr`]:  https://doc.rust-lang.org/std/ops/trait.BitOr.html
@@ -316,8 +316,8 @@
 
 #![deny(missing_docs)]
 #![doc(
-    html_root_url = "https://docs.rs/does_impl/0.0.0",
-    html_logo_url = "https://raw.githubusercontent.com/nvzqz/does_impl/assets/logo.svg?sanitize=true"
+    html_root_url = "https://docs.rs/impls/0.0.0",
+    html_logo_url = "https://raw.githubusercontent.com/nvzqz/impls/assets/logo.svg?sanitize=true"
 )]
 
 #[doc(hidden)]
@@ -344,19 +344,19 @@ pub mod _bool;
 /// used as a `const` value:
 ///
 /// ```
-/// # #[macro_use] extern crate does_impl;
-/// const DOES_IMPL: bool = does_impl!(u8: From<u32>);
+/// # #[macro_use] extern crate impls;
+/// const IMPLS: bool = impls!(u8: From<u32>);
 /// ```
 ///
 /// Using [`static_assertions`], we can fail to compile if the trait expression
 /// evaluates to `false`:
 ///
 /// ```compile_fail
-/// # #[macro_use] extern crate does_impl;
+/// # #[macro_use] extern crate impls;
 /// # macro_rules! const_assert {
 /// #     ($x:expr) => { let _: [(); 1] = [(); $x as usize]; }
 /// # }
-/// const_assert!(does_impl!(*const u8: Send | Sync));
+/// const_assert!(impls!(*const u8: Send | Sync));
 /// ```
 ///
 /// ## Precedence and Nesting
@@ -366,9 +366,9 @@ pub mod _bool;
 /// expressions with parentheses.
 ///
 /// ```
-/// # #[macro_use] extern crate does_impl;
-/// let pre = does_impl!(u64:   From<u8> | From<u16>  ^ From<u32>  & From<u64>);
-/// let ltr = does_impl!(u64: ((From<u8> | From<u16>) ^ From<u32>) & From<u64>);
+/// # #[macro_use] extern crate impls;
+/// let pre = impls!(u64:   From<u8> | From<u16>  ^ From<u32>  & From<u64>);
+/// let ltr = impls!(u64: ((From<u8> | From<u16>) ^ From<u32>) & From<u64>);
 ///
 /// assert_eq!(pre, true | true ^ true & true);
 /// assert_ne!(pre, ltr);
@@ -380,7 +380,7 @@ pub mod _bool;
 /// implements one of two traits, but not both:
 ///
 /// ```
-/// # #[macro_use] extern crate does_impl;
+/// # #[macro_use] extern crate impls;
 /// struct T;
 ///
 /// trait Foo {}
@@ -388,7 +388,7 @@ pub mod _bool;
 ///
 /// impl Foo for T {}
 ///
-/// assert!(does_impl!(T: Foo ^ Bar));
+/// assert!(impls!(T: Foo ^ Bar));
 /// ```
 ///
 /// ## Reference Types
@@ -397,8 +397,8 @@ pub mod _bool;
 /// implement [`Copy`] _nor_ [`Clone`]:
 ///
 /// ```
-/// # #[macro_use] extern crate does_impl;
-/// assert!(does_impl!(&mut u32: !Copy & !Clone));
+/// # #[macro_use] extern crate impls;
+/// assert!(impls!(&mut u32: !Copy & !Clone));
 /// ```
 ///
 /// Surely you're thinking now that this macro must be broken, because you've
@@ -412,18 +412,18 @@ pub mod _bool;
 /// There's a variety of types in Rust that don't implement [`Sized`]:
 ///
 /// ```
-/// # #[macro_use] extern crate does_impl;
+/// # #[macro_use] extern crate impls;
 /// // Slices store their size with their pointer.
-/// assert!(does_impl!(str:  !Sized));
-/// assert!(does_impl!([u8]: !Sized));
+/// assert!(impls!(str:  !Sized));
+/// assert!(impls!([u8]: !Sized));
 ///
 /// // Trait objects store their size in a vtable.
 /// trait Foo {}
-/// assert!(does_impl!(dyn Foo: !Sized));
+/// assert!(impls!(dyn Foo: !Sized));
 ///
 /// // Wrappers around unsized types are also unsized themselves.
 /// struct Bar([u8]);
-/// assert!(does_impl!(Bar: !Sized));
+/// assert!(impls!(Bar: !Sized));
 /// ```
 ///
 /// ## Generic Types
@@ -432,7 +432,7 @@ pub mod _bool;
 /// constraints of the generic type:
 ///
 /// ```
-/// # #[macro_use] extern crate does_impl;
+/// # #[macro_use] extern crate impls;
 /// use std::cell::Cell;
 ///
 /// struct Value<T> {
@@ -442,7 +442,7 @@ pub mod _bool;
 ///
 /// impl<T: Send> Value<T> {
 ///     fn do_stuff() {
-///         assert!(does_impl!(Cell<T>: Send));
+///         assert!(impls!(Cell<T>: Send));
 ///         // ...
 ///     }
 /// }
@@ -451,12 +451,12 @@ pub mod _bool;
 /// Keep in mind that this can result in false negatives:
 ///
 /// ```
-/// # #[macro_use] extern crate does_impl;
+/// # #[macro_use] extern crate impls;
 /// const fn is_copy<T>() -> bool {
-///     does_impl!(T: Copy)
+///     impls!(T: Copy)
 /// }
 ///
-/// assert_ne!(is_copy::<u32>(), does_impl!(u32: Copy));
+/// assert_ne!(is_copy::<u32>(), impls!(u32: Copy));
 /// ```
 ///
 /// [precedence]: https://doc.rust-lang.org/reference/expressions.html#expression-precedence
@@ -467,14 +467,14 @@ pub mod _bool;
 /// Traits with lifetimes are also supported:
 ///
 /// ```
-/// # #[macro_use] extern crate does_impl;
+/// # #[macro_use] extern crate impls;
 /// trait Ref<'a> {}
 /// impl<'a, T: ?Sized> Ref<'a> for &'a T {}
 /// impl<'a, T: ?Sized> Ref<'a> for &'a mut T {}
 ///
-/// assert!(does_impl!(&'static str:      Ref<'static>));
-/// assert!(does_impl!(&'static mut [u8]: Ref<'static>));
-/// assert!(does_impl!(String:           !Ref<'static>));
+/// assert!(impls!(&'static str:      Ref<'static>));
+/// assert!(impls!(&'static mut [u8]: Ref<'static>));
+/// assert!(impls!(String:           !Ref<'static>));
 /// ```
 ///
 /// [compile-time]: https://en.wikipedia.org/wiki/Compile_time
@@ -484,114 +484,114 @@ pub mod _bool;
 /// [`Copy`]:   https://doc.rust-lang.org/std/marker/trait.Copy.html
 /// [`Sized`]:  https://doc.rust-lang.org/std/marker/trait.Sized.html
 #[macro_export(local_inner_macros)]
-macro_rules! does_impl {
+macro_rules! impls {
     ($type:ty: $($trait_expr:tt)+) => {
-        _does_impl!($type: $($trait_expr)+)
+        _impls!($type: $($trait_expr)+)
     };
 }
 
-/// Handles the dirty work of `does_impl`.
+/// Handles the dirty work of `impls`.
 #[doc(hidden)]
 #[macro_export(local_inner_macros)]
-macro_rules! _does_impl {
+macro_rules! _impls {
     // ONE: Turn `$trait` into `true` or `false` based on whether `$type`
     // implements it.
     ($type:ty: $(! !)* $trait:path) => {{
         // Do not import types in order to prevent trait name collisions.
 
-        /// Fallback trait with `False` for `DOES_IMPL` if the type does not
+        /// Fallback trait with `False` for `IMPLS` if the type does not
         /// implement the given trait.
         trait DoesNotImpl {
-            const DOES_IMPL: $crate::_bool::False = $crate::_bool::False;
+            const IMPLS: $crate::_bool::False = $crate::_bool::False;
         }
         impl<T: ?Sized> DoesNotImpl for T {}
 
-        /// Concrete type with `True` for `DOES_IMPL` if the type does implement
+        /// Concrete type with `True` for `IMPLS` if the type does implement
         /// the given trait. Otherwise, it falls back to `DoesNotImpl`.
         struct Wrapper<T: ?Sized>($crate::_core::marker::PhantomData<T>);
 
         #[allow(dead_code)]
         impl<T: ?Sized + $trait> Wrapper<T> {
-            const DOES_IMPL: $crate::_bool::True = $crate::_bool::True;
+            const IMPLS: $crate::_bool::True = $crate::_bool::True;
         }
 
-        <Wrapper<$type>>::DOES_IMPL.value()
+        <Wrapper<$type>>::IMPLS.value()
     }};
 
     // NOT
     ($type:ty: $(! !)* !$trait:path) => {
-        !_does_impl!($type: $trait)
+        !_impls!($type: $trait)
     };
 
     // PAREN
     ($type:ty: $(! !)* ($($trait_expr:tt)+)) => {
-        _does_impl!($type: $($trait_expr)+)
+        _impls!($type: $($trait_expr)+)
     };
     // PAREN+NOT
     ($type:ty: $(! !)* !($($trait_expr:tt)+)) => {
-        !_does_impl!($type: $($trait_expr)+)
+        !_impls!($type: $($trait_expr)+)
     };
     // PAREN+OR
     ($type:ty: $(! !)* ($($t1:tt)+) | $($t2:tt)+) => {
-        _does_impl!($type: $($t1)+)
+        _impls!($type: $($t1)+)
         |
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     };
     // PAREN+OR+NOT
     ($type:ty: $(! !)* !($($t1:tt)+) | $($t2:tt)+) => {
-        !_does_impl!($type: $($t1)+)
+        !_impls!($type: $($t1)+)
         |
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     };
     // PAREN+AND
     ($type:ty: $(! !)* ($($t1:tt)+) & $($t2:tt)+) => {
-        _does_impl!($type: $($t1)+)
+        _impls!($type: $($t1)+)
         &
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     };
     // PAREN+AND+NOT
     ($type:ty: $(! !)* !($($t1:tt)+) & $($t2:tt)+) => {
-        !_does_impl!($type: $($t1)+)
+        !_impls!($type: $($t1)+)
         &
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     };
     // PAREN+XOR
     ($type:ty: $(! !)* ($($t1:tt)+) ^ $($t2:tt)+) => {
-        _does_impl!($type: $($t1)+)
+        _impls!($type: $($t1)+)
         ^
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     };
     // PAREN+XOR+NOT
     ($type:ty: $(! !)* !($($t1:tt)+) ^ $($t2:tt)+) => {
-        !_does_impl!($type: $($t1)+)
+        !_impls!($type: $($t1)+)
         ^
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     };
 
     // OR: Any.
     ($type:ty: $(! !)* $t1:path | $($t2:tt)+) => {{
-        _does_impl!($type: $t1)
+        _impls!($type: $t1)
         |
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
     // OR+NOT: Any.
     ($type:ty: $(! !)* !$t1:path | $($t2:tt)+) => {{
-        !_does_impl!($type: $t1)
+        !_impls!($type: $t1)
         |
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
 
     // AND: 0 lifetimes, 0 generics.
     ($type:ty: $(! !)* $t1:ident & $($t2:tt)+) => {{
-        _does_impl!($type: $t1)
+        _impls!($type: $t1)
         &
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
     // AND+NOT: 0 lifetimes, 0 generics.
     ($type:ty: $(! !)* !$t1:ident & $($t2:tt)+) => {{
-        !_does_impl!($type: $t1)
+        !_impls!($type: $t1)
         &
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
 
     // AND: 1+ lifetimes, 0+ generics.
@@ -601,9 +601,9 @@ macro_rules! _does_impl {
         &
         $($t2:tt)+
     ) => {{
-        _does_impl!($type: $t1 < $($t1_lifetime),+ $(, $t1_generic)* >)
+        _impls!($type: $t1 < $($t1_lifetime),+ $(, $t1_generic)* >)
         &
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
     // AND+NOT: 1+ lifetimes, 0+ generics.
     (
@@ -612,9 +612,9 @@ macro_rules! _does_impl {
         &
         $($t2:tt)+
     ) => {{
-        !_does_impl!($type: $t1 < $($t1_lifetime),+ $(, $t1_generic)* >)
+        !_impls!($type: $t1 < $($t1_lifetime),+ $(, $t1_generic)* >)
         &
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
 
     // AND: 0 lifetimes, 1+ generics.
@@ -624,9 +624,9 @@ macro_rules! _does_impl {
         &
         $($t2:tt)+
     ) => {{
-        _does_impl!($type: $t1 < $($t1_generic),+ >)
+        _impls!($type: $t1 < $($t1_generic),+ >)
         &
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
     // AND+NOT: 0 lifetimes, 1+ generics.
     (
@@ -635,22 +635,22 @@ macro_rules! _does_impl {
         &
         $($t2:tt)+
     ) => {{
-        !_does_impl!($type: $t1 < $($t1_generic),+ >)
+        !_impls!($type: $t1 < $($t1_generic),+ >)
         &
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
 
     // XOR: 0 lifetimes, 0 generics.
     ($type:ty: $(! !)* $t1:ident ^ $($t2:tt)+) => {{
-        _does_impl!($type: $t1)
+        _impls!($type: $t1)
         ^
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
     // XOR+NOT: 0 lifetimes, 0 generics.
     ($type:ty: $(! !)* !$t1:ident ^ $($t2:tt)+) => {{
-        ! _does_impl!($type: $t1)
+        ! _impls!($type: $t1)
         ^
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
 
     // XOR: 1+ lifetimes, 0+ generics.
@@ -660,9 +660,9 @@ macro_rules! _does_impl {
         ^
         $($t2:tt)+
     ) => {{
-        _does_impl!($type: $t1 < $($t1_lifetime),+ $(, $t1_generic)* >)
+        _impls!($type: $t1 < $($t1_lifetime),+ $(, $t1_generic)* >)
         ^
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
     // XOR+NOT: 1+ lifetimes, 0+ generics.
     (
@@ -671,9 +671,9 @@ macro_rules! _does_impl {
         ^
         $($t2:tt)+
     ) => {{
-        !_does_impl!($type: $t1 < $($t1_lifetime),+ $(, $t1_generic)* >)
+        !_impls!($type: $t1 < $($t1_lifetime),+ $(, $t1_generic)* >)
         ^
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
 
     // XOR: 0 lifetimes, 1+ generics.
@@ -683,9 +683,9 @@ macro_rules! _does_impl {
         ^
         $($t2:tt)+
     ) => {{
-        _does_impl!($type: $t1 < $($t1_generic),+ >)
+        _impls!($type: $t1 < $($t1_generic),+ >)
         ^
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
     // XOR+NOT: 0 lifetimes, 1+ generics.
     (
@@ -694,9 +694,9 @@ macro_rules! _does_impl {
         ^
         $($t2:tt)+
     ) => {{
-        ! _does_impl!($type: $t1 < $($t1_generic),+ >)
+        ! _impls!($type: $t1 < $($t1_generic),+ >)
         ^
-        _does_impl!($type: $($t2)+)
+        _impls!($type: $($t2)+)
     }};
 }
 
