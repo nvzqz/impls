@@ -1,0 +1,12 @@
+[package]
+name = "does_impl"
+version = "0.0.0"
+authors = ["Nikolai Vazquez"]
+license = "MIT OR Apache-2.0"
+description = "[WIP] Determine if a type does implement a logical trait expression."
+repository = "https://github.com/nvzqz/does_impl"
+homepage = "https://github.com/nvzqz/does_impl"
+documentation = "https://docs.rs/does_impl"
+categories = ["no-std", "rust-patterns", "development-tools::testing"]
+keywords = ["impl", "trait", "test", "macro"]
+include = ["Cargo.toml", "src", "README*", "CHANGELOG*", "LICENSE*"]
