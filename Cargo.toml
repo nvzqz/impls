@@ -9,4 +9,5 @@ homepage = "https://github.com/nvzqz/impls"
 documentation = "https://docs.rs/impls"
 categories = ["no-std", "rust-patterns", "development-tools::testing"]
 keywords = ["impl", "trait", "test", "macro"]
+readme = "README.md"
 include = ["Cargo.toml", "src", "README*", "CHANGELOG*", "LICENSE*"]
