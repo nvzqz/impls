@@ -217,3 +217,7 @@ macro_rules! _does_impl {
         _does_impl!($type: $($t2)+)
     }};
 }
+
+// Declare after macros in order to be able to use them.
+#[cfg(test)]
+mod tests;
