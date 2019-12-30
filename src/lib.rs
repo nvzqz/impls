@@ -332,7 +332,7 @@
 
 #![deny(missing_docs)]
 #![doc(
-    html_root_url = "https://docs.rs/impls/0.0.0",
+    html_root_url = "https://docs.rs/impls/1.0.0",
     html_logo_url = "https://raw.githubusercontent.com/nvzqz/impls/assets/logo.svg?sanitize=true"
 )]
 

@@ -1,6 +1,6 @@
 [package]
 name = "impls"
-version = "0.0.0"
+version = "1.0.0"
 authors = ["Nikolai Vazquez", "Nadrieril Feneanar"]
 license = "MIT OR Apache-2.0"
 description = "Determine if a type does implement a logical trait expression."
