@@ -1,0 +1,6 @@
+language: rust
+matrix:
+  include:
+    - rust: 1.37.0
+    - rust: stable
+script: cargo test
