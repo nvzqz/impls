@@ -1,6 +1,10 @@
 #![allow(dead_code)]
 
+#[derive(Clone)]
 struct Test;
+
+#[derive(Clone)]
+struct Box<T>(T);
 
 trait True {}
 impl<T: ?Sized> True for T {}
@@ -37,5 +41,50 @@ fn precedence() {
         True,  True,  False, False;
         True,  True,  True,  False;
         True,  True,  True,  True;
+    }
+}
+
+#[test]
+fn impls() {
+    let mut errors = String::new();
+
+    macro_rules! assert_impl {
+        ($t:ty: $($trait_expr:tt)+) => {
+            if !does_impl!($t: $($trait_expr)+) {
+                errors.push_str(&format!(
+                    "[{file}:{line}] {ty}: {expr}\n",
+                    file = file!(),
+                    line = line!(),
+                    ty = std::any::type_name::<$t>(),
+                    expr = stringify!($($trait_expr)+)
+                ));
+            }
+        };
+    }
+
+    assert_impl!(u8: (From<u16>) | (Into<u16>));
+    assert_impl!((): (From<u8>) | (From<u16>) | Send);
+    assert_impl!((): (!From<u8>) & !(From<u16>) & Send);
+    assert_impl!((): Copy | Clone);
+    assert_impl!((): Copy & Clone);
+    assert_impl!((): !(Copy ^ Clone));
+    assert_impl!(Test: Copy | Clone);
+    assert_impl!(Test: !Copy | Clone);
+    assert_impl!(Test: !Copy & Clone);
+    assert_impl!(Test: !Copy & (Clone));
+    assert_impl!(Test: !(Copy) & Clone);
+    assert_impl!(Test: !(!Clone));
+    assert_impl!(Test: !(Copy) & !(!Clone));
+    assert_impl!(Test: !(Copy & Clone));
+    assert_impl!(str: !Copy & !Clone);
+
+    assert_impl!(Box<u8>: Clone);
+    assert_impl!(Box<u8>: Clone & Send);
+    assert_impl!(Box<u8>: !(From<u8> | Into<u8>));
+
+    assert_impl!(&mut u8: !Copy);
+
+    if !errors.is_empty() {
+        panic!("Failed to satisfy implementations:\n{}", errors);
     }
 }
