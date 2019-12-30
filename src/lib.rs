@@ -1,3 +1,27 @@
+//! <div align="center">
+//!     <a href="https://github.com/nvzqz/does_impl">
+//!         <img src="https://raw.githubusercontent.com/nvzqz/does_impl/assets/banner.svg?sanitize=true"
+//!              height="250px">
+//!     </a>
+//!     <br>
+//!     <a href="https://crates.io/crates/does_impl">
+//!         <img src="https://img.shields.io/crates/v/does_impl.svg" alt="Crates.io">
+//!         <img src="https://img.shields.io/crates/d/does_impl.svg" alt="Downloads">
+//!     </a>
+//!     <a href="https://travis-ci.com/nvzqz/does_impl">
+//!         <img src="https://travis-ci.com/nvzqz/does_impl.svg?branch=master" alt="Build Status">
+//!     </a>
+//!     <img src="https://img.shields.io/badge/rustc-^1.37.0-blue.svg" alt="rustc ^1.37.0">
+//!     <br>
+//!     <a href="https://www.patreon.com/nvzqz">
+//!         <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patron!" height="35">
+//!     </a>
+//!     <a href="https://www.paypal.me/nvzqz">
+//!         <img src="https://buymecoffee.intm.org/img/button-paypal-white.png" alt="Buy me a coffee" height="35">
+//!     </a>
+//! </div>
+//! <br>
+//!
 //! Determine if a type does implement a logical trait
 //! expression<sup>[**?**](#logical-trait-expression)</sup>.
 //!
