@@ -340,7 +340,7 @@
 //!
 //! [`&mut T`]: https://doc.rust-lang.org/std/primitive.reference.html
 //! [`bool`]:   https://doc.rust-lang.org/std/primitive.bool.html
-//! [`Clone`]:  https://doc.rust-lang.org/std/marker/trait.Clone.html
+//! [`Clone`]:  https://doc.rust-lang.org/std/clone/trait.Clone.html
 //! [`Copy`]:   https://doc.rust-lang.org/std/marker/trait.Copy.html
 //! [`Sized`]:  https://doc.rust-lang.org/std/marker/trait.Sized.html
 //! [`usize`]:  https://doc.rust-lang.org/std/primitive.usize.html
@@ -546,7 +546,7 @@ pub extern crate core as _core;
 ///
 /// [`&mut T`]: https://doc.rust-lang.org/std/primitive.reference.html
 /// [`bool`]:   https://doc.rust-lang.org/std/primitive.bool.html
-/// [`Clone`]:  https://doc.rust-lang.org/std/marker/trait.Clone.html
+/// [`Clone`]:  https://doc.rust-lang.org/std/clone/trait.Clone.html
 /// [`Copy`]:   https://doc.rust-lang.org/std/marker/trait.Copy.html
 /// [`Sized`]:  https://doc.rust-lang.org/std/marker/trait.Sized.html
 /// [`usize`]:  https://doc.rust-lang.org/std/primitive.usize.html
