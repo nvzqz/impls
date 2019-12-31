@@ -61,6 +61,7 @@ code.
   - [Generic Types](#generic-types)
   - [Lifetimes](#lifetimes)
   - [Trait-Dependent Type Sizes](#trait-dependent-type-sizes)
+- [How It Works](#how-it-works)
 - [Authors](#authors)
 - [License](#license)
 
@@ -310,6 +311,33 @@ The [`bool`] returned from [`impls!`] gets casted to a [`usize`], becoming 1 or
 0 depending on if it's `true` or `false` respectively. If `true`, this becomes
 32 × 1, which is 32. This then becomes the length of the byte array in `Foo`.
 
+## How It Works
+
+This abuses [inherent `impl`] priority to determine that a trait is implemented:
+
+```rust
+// Fallback trait for to all types to default to `false`.
+trait NotCopy {
+    const IS_COPY: bool = false;
+}
+impl<T> NotCopy for T {}
+
+// Concrete wrapper type where `IS_COPY` becomes `true` if `T: Copy`.
+struct IsCopy<T>(std::marker::PhantomData<T>);
+
+impl<T: Copy> IsCopy<T> {
+    // Because this is implemented directly on `IsCopy`, it has priority over
+    // the `NotCopy` trait impl.
+    //
+    // Note: this is a *totally different* associated constant from that in
+    // `NotCopy`. This does not specialize the `NotCopy` trait impl on `IsCopy`.
+    const IS_COPY: bool = true;
+}
+
+assert!(IsCopy::<u32>::IS_COPY);
+assert!(!IsCopy::<Vec<u32>>::IS_COPY);
+```
+
 ## Authors
 
 - Nikolai Vazquez
@@ -337,6 +365,7 @@ at your choosing.
 [@NikolaiVazquez]: https://twitter.com/NikolaiVazquez
 
 [compile-time]: https://en.wikipedia.org/wiki/Compile_time
+[inherent `impl`]: https://doc.rust-lang.org/reference/items/implementations.html#inherent-implementations
 
 [`&mut T`]: https://doc.rust-lang.org/std/primitive.reference.html
 [`bool`]:   https://doc.rust-lang.org/std/primitive.bool.html
