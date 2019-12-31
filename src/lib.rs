@@ -41,6 +41,7 @@
 //!
 //! # Index
 //!
+//! - [Reasoning](#reasoning)
 //! - [Usage](#usage)
 //! - [Vocabulary](#vocabulary)
 //!   - [Macro](#macro)
@@ -57,6 +58,19 @@
 //!   - [Trait-Dependent Type Sizes](#trait-dependent-type-sizes)
 //! - [Authors](#authors)
 //! - [License](#license)
+//!
+//! # Reasoning
+//!
+//! As a library author, it's important to ensure that your API remains stable.
+//! Trait implementations are part of API stability. For example: if you
+//! accidentally introduce an inner type that makes your publicly-exposed type
+//! no longer be [`Send`] or [`Sync`], you've now broken your API without
+//! noticing it! The most common case of this happening is adding a [raw
+//! pointer][ptr] (i.e. `*const T`, `*mut T`) as a type field.
+//!
+//! By checking situations like this with [`impls!`], either at [compile-time]
+//! or in a unit test, you can ensure that no API-breaking changes are made
+//! without noticing until it's too late.
 //!
 //! # Usage
 //!
@@ -355,6 +369,9 @@
 //! [`BitXor`]: https://doc.rust-lang.org/std/ops/trait.BitXor.html
 //! [`Into`]:   https://doc.rust-lang.org/std/convert/trait.Into.html
 //! [`Not`]:    https://doc.rust-lang.org/std/ops/trait.Not.html
+//! [`Send`]:   https://doc.rust-lang.org/std/marker/trait.Send.html
+//! [`Sync`]:   https://doc.rust-lang.org/std/marker/trait.Send.html
+//! [ptr]:      https://doc.rust-lang.org/std/primitive.pointer.html
 //!
 //! [AST]:                   https://en.wikipedia.org/wiki/Abstract_syntax_tree
 //! [exclusive disjunction]: https://en.wikipedia.org/wiki/Exclusive_disjunction
