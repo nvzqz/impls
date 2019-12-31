@@ -332,7 +332,7 @@
 
 #![deny(missing_docs)]
 #![doc(
-    html_root_url = "https://docs.rs/impls/1.0.1",
+    html_root_url = "https://docs.rs/impls/1.0.2",
     html_logo_url = "https://raw.githubusercontent.com/nvzqz/impls/assets/logo.svg?sanitize=true"
 )]
 // Allocating types like `String` are used when testing.
