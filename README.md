@@ -140,11 +140,11 @@ is whether the given type implements the trait or not.
 
 An expression can be formed from these trait operations:
 
-- And (`&`): also known as [logical disjunction], this returns `true` if
+- And (`&`): also known as [logical conjunction], this returns `true` if
   **both** operands are `true`. This is usually defined in Rust via the
   [`BitAnd`] trait.
 
-- Or (`|`): also known as [logical conjunction], this returns `true` if
+- Or (`|`): also known as [logical disjunction], this returns `true` if
   **either** of two operands is `true`. This is usually defined in Rust via
   the [`BitOr`] trait.
 
