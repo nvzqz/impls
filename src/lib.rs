@@ -283,7 +283,7 @@
 //! assert!(impls!(String:           !Ref<'static>));
 //! ```
 //!
-//! ## Authors
+//! # Authors
 //!
 //! - Nikolai Vazquez
 //!   (GitHub: [@nvzqz](https://github.com/nvzqz), Twitter: [@NikolaiVazquez])
