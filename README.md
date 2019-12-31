@@ -346,7 +346,7 @@ at your choosing.
 [`usize`]:  https://doc.rust-lang.org/std/primitive.usize.html
 
 [`Cargo.toml`]: https://doc.rust-lang.org/cargo/reference/manifest.html
-[`impls!`]: https://docs.rs/impls/1.0.2/impls/macro.impls.html
+[`impls!`]: https://docs.rs/impls/1.0.3/impls/macro.impls.html
 [2018]: https://blog.rust-lang.org/2018/12/06/Rust-1.31-and-rust-2018.html#rust-2018
 [crate]: https://crates.io/crates/impls
 
