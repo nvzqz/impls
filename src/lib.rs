@@ -341,14 +341,6 @@
 #[doc(hidden)]
 pub extern crate core as _core;
 
-/// Type-level booleans.
-///
-/// This module and its contents are not for public consumption and are thus
-/// exempt from semantic versioning.
-#[doc(hidden)]
-#[path = "bool.rs"]
-pub mod _bool;
-
 /// Returns `true` if a type implements a logical trait expression.
 ///
 // IMPORTANT: Update crate level docs when updating these examples!
@@ -520,7 +512,7 @@ macro_rules! _impls {
         /// Fallback trait with `False` for `IMPLS` if the type does not
         /// implement the given trait.
         trait DoesNotImpl {
-            const IMPLS: $crate::_bool::False = $crate::_bool::False;
+            const IMPLS: bool = false;
         }
         impl<T: ?Sized> DoesNotImpl for T {}
 
@@ -530,10 +522,10 @@ macro_rules! _impls {
 
         #[allow(dead_code)]
         impl<T: ?Sized + $trait> Wrapper<T> {
-            const IMPLS: $crate::_bool::True = $crate::_bool::True;
+            const IMPLS: bool = true;
         }
 
-        <Wrapper<$type>>::IMPLS.value()
+        <Wrapper<$type>>::IMPLS
     }};
 
     // NOT

@@ -1,5 +1,7 @@
 #![allow(dead_code)]
 
+mod bool;
+
 #[derive(Clone)]
 struct Test;
 
@@ -16,11 +18,9 @@ trait False {}
 // https://doc.rust-lang.org/reference/expressions.html#expression-precedence
 #[test]
 fn precedence() {
-    use crate::_bool;
-
     macro_rules! table {
         ($($a:ident, $b:ident, $c:ident, $d:ident;)+) => { $({
-            const IMPLS: bool = _bool::$a.value() | _bool::$b.value() ^ _bool::$c.value() & _bool::$d.value();
+            const IMPLS: bool = bool::$a.value() | bool::$b.value() ^ bool::$c.value() & bool::$d.value();
 
             assert_eq!(impls!(Test:   $a |  $b  ^  $c  & $d),   IMPLS);
             assert_eq!(impls!(Test:   $a | ($b  ^ ($c  & $d))), IMPLS);
