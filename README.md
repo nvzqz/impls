@@ -40,7 +40,9 @@ set of traits<sup>[**?**](#trait)</sup>.
 assert!(impls!(String: Clone & !Copy & Send & Sync));
 ```
 
-See [examples](#examples) for detailed use cases.
+See ["Examples"](#examples) for detailed use cases and, if you're brave, see
+["Trait-Dependent Type Sizes"](#trait-dependent-type-sizes) for some cursed
+code.
 
 ## Index
 
@@ -57,6 +59,7 @@ See [examples](#examples) for detailed use cases.
   - [Unsized Types](#unsized-types)
   - [Generic Types](#generic-types)
   - [Lifetimes](#lifetimes)
+  - [Trait-Dependent Type Sizes](#trait-dependent-type-sizes)
 - [Authors](#authors)
 - [License](#license)
 
@@ -272,6 +275,27 @@ assert!(impls!(&'static mut [u8]: Ref<'static>));
 assert!(impls!(String:           !Ref<'static>));
 ```
 
+### Trait-Dependent Type Sizes
+
+This macro enables something really cool (read cursed) that couldn't be done
+before: making a type's size dependent on what traits it implements! Note that
+this probably is a bad idea and shouldn't be used in production.
+
+Here `Foo` becomes 32 bytes for no other reason than it implementing [`Clone`]:
+
+```rust
+const SIZE: usize = 32 * (impls!(Foo: Clone) as usize);
+
+#[derive(Clone)]
+struct Foo([u8; SIZE]);
+
+assert_eq!(std::mem::size_of::<Foo>(), 32);
+```
+
+The [`bool`] returned from [`impls!`] gets casted to a [`usize`], becoming 1 or
+0 depending on if it's `true` or `false` respectively. If `true`, this becomes
+32 × 1, which is 32. This then becomes the length of the byte array in `Foo`.
+
 ## Authors
 
 - Nikolai Vazquez
@@ -316,6 +340,7 @@ at your choosing.
 [`bool`]:   https://doc.rust-lang.org/std/primitive.bool.html
 [`Into`]:   https://doc.rust-lang.org/std/convert/trait.Into.html
 [`Not`]:    https://doc.rust-lang.org/std/ops/trait.Not.html
+[`usize`]:  https://doc.rust-lang.org/std/primitive.usize.html
 
 [AST]:                   https://en.wikipedia.org/wiki/Abstract_syntax_tree
 [exclusive disjunction]: https://en.wikipedia.org/wiki/Exclusive_disjunction
