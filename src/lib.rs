@@ -25,8 +25,8 @@
 //! Determine if a type implements a logical trait
 //! expression<sup>[**?**](#logical-trait-expression)</sup>.
 //!
-//! This library defines the [`impls!`], a macro<sup>[**?**](#macro)</sup>
-//! that returns a [`bool`] indicating whether a type implements a boolean-like
+//! This library defines [`impls!`], a macro<sup>[**?**](#macro)</sup> that
+//! returns a [`bool`] indicating whether a type implements a boolean-like
 //! expression over a set of traits<sup>[**?**](#trait)</sup>.
 //!
 //! ```
