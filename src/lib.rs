@@ -23,7 +23,8 @@
 //! <br>
 //!
 //! Determine if a type implements a logical trait
-//! expression<sup>[**?**](#logical-trait-expression)</sup>.
+//! expression<sup>[**?**](#logical-trait-expression)</sup>, brought to you by
+//! [@NikolaiVazquez]!
 //!
 //! This library defines [`impls!`], a macro<sup>[**?**](#macro)</sup> that
 //! returns a [`bool`] indicating whether a type implements a boolean-like
@@ -285,7 +286,7 @@
 //! ## Authors
 //!
 //! - Nikolai Vazquez
-//!   (GitHub: [@nvzqz](https://github.com/nvzqz), Twitter: [@NikolaiVazquez](https://twitter.com/NikolaiVazquez))
+//!   (GitHub: [@nvzqz](https://github.com/nvzqz), Twitter: [@NikolaiVazquez])
 //!
 //!   Implemented the `impls!` macro with support for all logical operators and
 //!   without the limitations of the initial `does_impl!` macro by Nadrieril.
@@ -305,6 +306,8 @@
 //! - [Apache License (Version 2.0)](https://github.com/nvzqz/impls/blob/master/LICENSE-APACHE)
 //!
 //! at your choosing.
+//!
+//! [@NikolaiVazquez]: https://twitter.com/NikolaiVazquez
 //!
 //! [compile-time]: https://en.wikipedia.org/wiki/Compile_time
 //!
