@@ -325,9 +325,11 @@ at your choosing.
 [compile-time]: https://en.wikipedia.org/wiki/Compile_time
 
 [`&mut T`]: https://doc.rust-lang.org/std/primitive.reference.html
+[`bool`]:   https://doc.rust-lang.org/std/primitive.bool.html
 [`Clone`]:  https://doc.rust-lang.org/std/marker/trait.Clone.html
 [`Copy`]:   https://doc.rust-lang.org/std/marker/trait.Copy.html
 [`Sized`]:  https://doc.rust-lang.org/std/marker/trait.Sized.html
+[`usize`]:  https://doc.rust-lang.org/std/primitive.usize.html
 
 [`Cargo.toml`]: https://doc.rust-lang.org/cargo/reference/manifest.html
 [`impls!`]: https://docs.rs/impls/1.0.2/impls/macro.impls.html
@@ -337,10 +339,8 @@ at your choosing.
 [`BitAnd`]: https://doc.rust-lang.org/std/ops/trait.BitAnd.html
 [`BitOr`]:  https://doc.rust-lang.org/std/ops/trait.BitOr.html
 [`BitXor`]: https://doc.rust-lang.org/std/ops/trait.BitXor.html
-[`bool`]:   https://doc.rust-lang.org/std/primitive.bool.html
 [`Into`]:   https://doc.rust-lang.org/std/convert/trait.Into.html
 [`Not`]:    https://doc.rust-lang.org/std/ops/trait.Not.html
-[`usize`]:  https://doc.rust-lang.org/std/primitive.usize.html
 
 [AST]:                   https://en.wikipedia.org/wiki/Abstract_syntax_tree
 [exclusive disjunction]: https://en.wikipedia.org/wiki/Exclusive_disjunction
